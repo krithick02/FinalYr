@@ -1,0 +1,4 @@
+policy,mean_reward,std_reward,mean_energy,mean_latency,mean_accuracy,pct_local,pct_edge,pct_cloud
+Q-Learning,6.5602,5.7562,0.0481,1.1744,0.9195,17.1,26.1,56.8
+Always-Local,-4.4223,5.3598,0.1615,0.5402,0.7398,100.0,0.0,0.0
+Random,-2.1261,5.2125,0.0818,0.9581,0.8614,32.0,33.7,34.3

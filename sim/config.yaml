@@ -1,0 +1,91 @@
+# ──────────────────────────────────────────────────────────────────────────────
+# IoT Task-Offloading Q-Learning  --  Balanced Config  (Phase 1.1)
+# ──────────────────────────────────────────────────────────────────────────────
+
+# ── Mode ──────────────────────────────────────────────────────────────────────
+mode: "single"          # "single" | "two_device"
+
+# ── Training ──────────────────────────────────────────────────────────────────
+episodes: 12000
+steps_per_episode: 50
+seed: 42
+train_seeds: [42, 123, 456, 789, 1337]
+
+# ── Q-Learning ────────────────────────────────────────────────────────────────
+alpha:
+  start: 0.20
+  end: 0.01
+  decay_type: "exponential"
+  decay_rate: 0.9995
+
+gamma: 0.95
+
+epsilon:
+  start: 1.0
+  end: 0.05
+  decay_type: "exponential"
+  decay_rate: 0.9995
+
+# ── Reward weights ────────────────────────────────────────────────────────────
+weights:
+  w1: 0.40    # energy
+  w2: 0.40    # 1 / latency
+  w3: 0.20    # accuracy
+
+# ── Penalty values ────────────────────────────────────────────────────────────
+penalties:
+  low_battery: 2.0
+  death: 10.0
+  fairness: 1.0
+
+# ── State-space bins ──────────────────────────────────────────────────────────
+bins:
+  battery: 5
+  edge_queue: 5
+
+max_edge_queue: 20
+
+# ── Energy lookup
+energy:
+  light:  [0.004, 0.006, 0.008]
+  medium: [0.015, 0.008, 0.007]
+  heavy:  [0.060, 0.012, 0.010]
+
+# ── Base latency lookup
+latency:
+  light:  [0.20, 0.40, 1.00]
+  medium: [0.50, 0.50, 1.20]
+  heavy:  [2.00, 0.60, 1.40]
+
+# ── Accuracy lookup
+accuracy:
+  light:  [0.88, 0.89, 0.92]
+  medium: [0.72, 0.87, 0.95]
+  heavy:  [0.52, 0.84, 0.97]
+
+# ── Network latency multipliers
+network_latency_mult:
+  edge:  [3.0, 1.5, 1.0]
+  cloud: [1.8, 1.2, 1.0]
+
+# ── Queue depth latency multipliers
+queue_latency_mult: [1.0, 1.5, 2.5, 4.0, 6.0]
+
+# ── Poor-network energy penalty multiplier
+poor_network_energy_mult: 1.40
+
+# ── Network quality Markov transition matrix
+network_transition:
+  poor:   [0.60, 0.35, 0.05]
+  medium: [0.15, 0.65, 0.20]
+  good:   [0.05, 0.30, 0.65]
+
+# ── Edge queue stochastic dynamics
+queue_arrival_prob: 0.35
+queue_departure_prob: 0.55
+
+# ── Evaluation ────────────────────────────────────────────────────────────────
+eval_episodes: 200
+eval_seeds: [42, 123, 456, 789, 1337]
+data_dir: "data"
+results_dir: "results"
